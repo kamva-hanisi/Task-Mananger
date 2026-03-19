@@ -12,22 +12,23 @@ function TaskList({ tasks, fetchTasks }) {
   };
 
   return (
-    <ul>
+    <div>
       {tasks.map((task) => (
-        <li key={task.id}>
-          <span
-            style={{
-              textDecoration: task.completed ? "line-through" : "none",
-              cursor: "pointer",
-            }}
-            onClick={() => toggleTask(task.id, task.completed)}
-          >
-            {task.title}
+        <div className="task" key={task.id}>
+          <span>
+            {task.title} {task.completed ? "✔" : ""}
           </span>
-          <button onClick={() => deleteTask(task.id)}>Delete</button>
-        </li>
+
+          <div>
+            <button onClick={() => toggleTask(task.id, task.completed)}>
+              Toggle
+            </button>
+
+            <button onClick={() => deleteTask(task.id)}>Delete</button>
+          </div>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }
 
