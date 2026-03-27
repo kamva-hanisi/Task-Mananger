@@ -32,7 +32,7 @@ exports.addTask = (req, res) => {
         title: title.trim(),
         completed: false,
       });
-    }
+    },
   );
 };
 
@@ -60,7 +60,7 @@ exports.updateTask = (req, res) => {
       }
 
       return res.json({ id: Number(id), completed });
-    }
+    },
   );
 };
 

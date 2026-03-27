@@ -1,10 +1,13 @@
 # Backend:
 
 - npm init -y
-- npm install express mysql2 cors
-- npm install -D nodemon
+- npm install express
+- npm install mysql
+- npm install dotenv
+- npm install cors
+- npm install nodemon --save-dev
 
-# `running: npx nodemon index.js`
+# `running: npx nodemon backend`
 
 # Frontend:
 
