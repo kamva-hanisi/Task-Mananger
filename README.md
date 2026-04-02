@@ -1,17 +1,49 @@
-# Backend:
+# Task Manager
 
-- npm init -y
-- npm install express
-- npm install mysql
-- npm install dotenv
-- npm install cors
-- npm install nodemon --save-dev
+A task management app with a mid-level React frontend and a junior-level Express/MySQL backend.
 
-# `running: npx nodemon backend`
+## Folder structure
 
-# Frontend:
+- `client/`: React frontend
+- `server/`: Express backend
 
-- npx create-react-app client
-- npm install axios
+## Backend setup
 
-# `running: npm start`
+1. Open a terminal in `server/`
+2. Install dependencies: `npm install`
+3. Copy `.env.example` to `.env` and update your MySQL credentials
+4. Initialize the database:
+   - Run the SQL in `server/db-init.sql`
+   - Or use your MySQL client to create the `tasks` database and `tasks` table
+5. Start the server:
+   - `npm run dev` (development)
+   - `npm start` (production)
+
+The backend listens on `PORT` from `.env`, or `5000` by default.
+
+## Frontend setup
+
+1. Open a terminal in `client/`
+2. Install dependencies: `npm install`
+3. Copy `client/.env.example` to `client/.env` if you need a custom API URL
+4. Start the app: `npm start`
+
+## GitHub Pages deployment
+
+To deploy the frontend to GitHub Pages:
+
+1. In `client/`, install `gh-pages`: `npm install --save-dev gh-pages`
+2. Run `npm run deploy`
+3. The app will be published at `https://kamva-hanisi.github.io/Task-Mananger`
+
+> Note: GitHub Pages only serves the React frontend. The backend must be hosted separately on a Node-compatible service.
+
+## Deployment notes
+
+- The frontend reads `REACT_APP_API_URL` if set; otherwise it uses `http://localhost:5000/api`
+- Use `npm run build` in `client/` to create a production bundle
+- The backend now has a `start` script and uses `PORT || 5000`
+
+## Database initialization
+
+The SQL file `server/db-init.sql` creates the `tasks` database and the required `tasks` table.

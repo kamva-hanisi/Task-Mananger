@@ -6,13 +6,20 @@ import "./App.css";
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const fetchTasks = async () => {
+    setLoading(true);
+    setError("");
+
     try {
       const res = await API.get("/tasks");
       setTasks(res.data);
     } catch (err) {
-      console.log("Backend not running");
+      setError("Unable to load tasks. Make sure the backend is running.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -23,8 +30,13 @@ function App() {
   return (
     <div className="container">
       <h1>Task Manager</h1>
-      <TaskForm fetchTasks={fetchTasks} />
-      <TaskList tasks={tasks} fetchTasks={fetchTasks} />
+      <TaskForm fetchTasks={fetchTasks} setError={setError} />
+      {error && <div className="error">{error}</div>}
+      {loading ? (
+        <div className="loading">Loading tasks...</div>
+      ) : (
+        <TaskList tasks={tasks} fetchTasks={fetchTasks} setError={setError} />
+      )}
     </div>
   );
 }
