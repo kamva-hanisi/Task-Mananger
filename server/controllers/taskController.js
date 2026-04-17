@@ -40,32 +40,38 @@ exports.updateTask = (req, res) => {
   const { id } = req.params;
   const { title, completed } = req.body;
 
-  if (!title || !title.trim()) {
-    return res.status(400).json({ message: "Title is required" });
-  }
+  db.query("SELECT * FROM tasks WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: "Database error" });
+    }
 
-  if (typeof completed !== "boolean") {
-    return res
-      .status(400)
-      .json({ message: "completed must be provided as a boolean" });
-  }
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Task not found" });
+    }
 
-  db.query(
-    "UPDATE tasks SET title = ?, completed = ? WHERE id = ?",
-    [title.trim(), completed, id],
-    (err, result) => {
-      if (err) {
-        console.error("Failed to update task:", err);
-        return res.status(500).json({ message: "Failed to update task" });
-      }
+    const current = results[0];
 
-      if (result.affectedRows === 0) {
-        return res.status(404).json({ message: "Task not found" });
-      }
+    const updatedTitle = title !== undefined ? title.trim() : current.title;
 
-      return res.json({ id: Number(id), title: title.trim(), completed });
-    },
-  );
+    const updatedCompleted =
+      completed !== undefined ? completed : current.completed;
+
+    db.query(
+      "UPDATE tasks SET title = ?, completed = ? WHERE id = ?",
+      [updatedTitle, updatedCompleted, id],
+      (err2) => {
+        if (err2) {
+          return res.status(500).json({ message: "Failed to update task" });
+        }
+
+        return res.json({
+          id: Number(id),
+          title: updatedTitle,
+          completed: updatedCompleted,
+        });
+      },
+    );
+  });
 };
 
 exports.deleteTask = (req, res) => {
