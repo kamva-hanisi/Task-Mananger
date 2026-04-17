@@ -136,11 +136,11 @@ button.danger:hover {
     flex-direction: column;
   }
 
-  .task-form input,
+  /* .task-form input,
   .task-form button,
   button {
     width: 100%;
-  }
+  } */
 
   .task {
     flex-direction: column;
