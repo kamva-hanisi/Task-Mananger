@@ -38,7 +38,11 @@ exports.addTask = (req, res) => {
 
 exports.updateTask = (req, res) => {
   const { id } = req.params;
-  const { completed } = req.body;
+  const { title, completed } = req.body;
+
+  if (!title || !title.trim()) {
+    return res.status(400).json({ message: "Title is required" });
+  }
 
   if (typeof completed !== "boolean") {
     return res
@@ -47,8 +51,8 @@ exports.updateTask = (req, res) => {
   }
 
   db.query(
-    "UPDATE tasks SET completed = ? WHERE id = ?",
-    [completed, id],
+    "UPDATE tasks SET title = ?, completed = ? WHERE id = ?",
+    [title.trim(), completed, id],
     (err, result) => {
       if (err) {
         console.error("Failed to update task:", err);
@@ -59,7 +63,7 @@ exports.updateTask = (req, res) => {
         return res.status(404).json({ message: "Task not found" });
       }
 
-      return res.json({ id: Number(id), completed });
+      return res.json({ id: Number(id), title: title.trim(), completed });
     },
   );
 };
