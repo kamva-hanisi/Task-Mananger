@@ -1,14 +1,18 @@
 const db = require("../config/db");
 
 exports.getTasks = (req, res) => {
-  db.query("SELECT * FROM tasks ORDER BY id DESC", (err, results) => {
-    if (err) {
-      console.error("Failed to fetch tasks:", err);
-      return res.status(500).json({ message: "Failed to fetch tasks" });
-    }
+  db.query(
+    "SELECT id, title, completed, created_at FROM tasks WHERE user_id = ? ORDER BY id DESC",
+    [req.user.id],
+    (err, results) => {
+      if (err) {
+        console.error("Failed to fetch tasks:", err);
+        return res.status(500).json({ message: "Failed to fetch tasks" });
+      }
 
-    return res.json(results);
-  });
+      return res.json(results);
+    },
+  );
 };
 
 exports.addTask = (req, res) => {
@@ -19,8 +23,8 @@ exports.addTask = (req, res) => {
   }
 
   db.query(
-    "INSERT INTO tasks (title, completed) VALUES (?, ?)",
-    [title.trim(), false],
+    "INSERT INTO tasks (user_id, title, completed) VALUES (?, ?, ?)",
+    [req.user.id, title.trim(), false],
     (err, result) => {
       if (err) {
         console.error("Failed to add task:", err);
@@ -40,7 +44,7 @@ exports.updateTask = (req, res) => {
   const { id } = req.params;
   const { title, completed } = req.body;
 
-  db.query("SELECT * FROM tasks WHERE id = ?", [id], (err, results) => {
+  db.query("SELECT * FROM tasks WHERE id = ? AND user_id = ?", [id, req.user.id], (err, results) => {
     if (err) {
       return res.status(500).json({ message: "Database error" });
     }
@@ -57,8 +61,8 @@ exports.updateTask = (req, res) => {
       completed !== undefined ? completed : current.completed;
 
     db.query(
-      "UPDATE tasks SET title = ?, completed = ? WHERE id = ?",
-      [updatedTitle, updatedCompleted, id],
+      "UPDATE tasks SET title = ?, completed = ? WHERE id = ? AND user_id = ?",
+      [updatedTitle, updatedCompleted, id, req.user.id],
       (err2) => {
         if (err2) {
           return res.status(500).json({ message: "Failed to update task" });
@@ -77,7 +81,7 @@ exports.updateTask = (req, res) => {
 exports.deleteTask = (req, res) => {
   const { id } = req.params;
 
-  db.query("DELETE FROM tasks WHERE id = ?", [id], (err, result) => {
+  db.query("DELETE FROM tasks WHERE id = ? AND user_id = ?", [id, req.user.id], (err, result) => {
     if (err) {
       console.error("Failed to delete task:", err);
       return res.status(500).json({ message: "Failed to delete task" });

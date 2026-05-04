@@ -1,6 +1,6 @@
 body {
   font-family: Inter, system-ui, sans-serif;
-  background: #eef2ff;
+  background: #f3f4f6;
   color: #111827;
   margin: 0;
   padding: 0;
@@ -11,16 +11,28 @@ body {
   margin: 40px auto;
   background: #ffffff;
   padding: 28px;
-  border-radius: 18px;
+  border-radius: 8px;
   box-shadow: 0 18px 35px rgba(15, 23, 42, 0.1);
   border: 1px solid #e2e8f0;
 }
 
-h1 {
-  text-align: center;
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
   margin-bottom: 24px;
+}
+
+h1 {
+  margin: 0;
   font-size: 2rem;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
+}
+
+.app-header p {
+  margin: 4px 0 0;
+  color: #64748b;
 }
 
 .task-form {
@@ -33,7 +45,7 @@ h1 {
   flex: 1;
   padding: 14px 16px;
   border: 1px solid #cbd5e1;
-  border-radius: 12px;
+  border-radius: 8px;
   outline: none;
   font-size: 1rem;
 }
@@ -45,15 +57,15 @@ h1 {
 .task-form button {
   padding: 14px 18px;
   border: none;
-  background: #2563eb;
+  background: #0f766e;
   color: white;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 .task-form button:hover {
-  background: #1d4ed8;
+  background: #115e59;
 }
 
 .task-list {
@@ -68,7 +80,8 @@ h1 {
   padding: 16px 18px;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
-  border-radius: 14px;
+  border-radius: 8px;
+  gap: 12px;
 }
 
 .task-title {
@@ -89,9 +102,9 @@ h1 {
 button {
   padding: 10px 14px;
   border: none;
-  background: #2563eb;
+  background: #0f766e;
   color: white;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   transition:
     transform 0.15s ease,
@@ -99,8 +112,23 @@ button {
 }
 
 button:hover {
-  background: #1d4ed8;
+  background: #115e59;
   transform: translateY(-1px);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+.ghost-btn {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.ghost-btn:hover {
+  background: #d1d5db;
 }
 
 button.danger {
@@ -116,7 +144,7 @@ button.danger:hover {
 .error {
   margin-top: 12px;
   padding: 14px 16px;
-  border-radius: 12px;
+  border-radius: 8px;
   background: #f8fafc;
   color: #0f172a;
 }
@@ -124,15 +152,15 @@ button.danger:hover {
 .edit-input {
   flex: 1;
   padding: 12px 14px;
-  border: 1px solid #2563eb;
-  border-radius: 10px;
+  border: 1px solid #0f766e;
+  border-radius: 8px;
   font-size: 1rem;
   outline: none;
   background: white;
 }
 
 .edit-input:focus {
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
 }
 
 .edit-btn {
@@ -164,10 +192,138 @@ button.danger:hover {
   color: #991b1b;
 }
 
+.success {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.auth-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.auth-panel {
+  width: min(100%, 420px);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 18px 35px rgba(15, 23, 42, 0.1);
+  padding: 28px;
+}
+
+.auth-heading {
+  margin-bottom: 22px;
+}
+
+.auth-heading p {
+  margin: 6px 0 0;
+  color: #64748b;
+}
+
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 4px;
+  background: #f1f5f9;
+  border-radius: 8px;
+}
+
+.auth-tabs button {
+  background: transparent;
+  color: #334155;
+  transform: none;
+}
+
+.auth-tabs button.active {
+  background: #ffffff;
+  color: #0f766e;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+}
+
+.auth-form {
+  display: grid;
+  gap: 14px;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 7px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.auth-form input {
+  padding: 13px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.auth-form input:focus {
+  border-color: #0f766e;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.14);
+}
+
+.auth-form .show-password {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: #475569;
+}
+
+.auth-form .show-password input {
+  width: 16px;
+  height: 16px;
+  accent-color: #0f766e;
+  box-shadow: none;
+}
+
+.reset-code {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #fef3c7;
+  color: #92400e;
+  font-weight: 700;
+  text-align: center;
+}
+
+.auth-form > button {
+  margin-top: 4px;
+  padding: 13px 16px;
+}
+
+.auth-form .link-btn {
+  margin-top: 0;
+  padding: 4px;
+  background: transparent;
+  color: #0f766e;
+  transform: none;
+}
+
+.auth-form .link-btn:hover {
+  background: transparent;
+  color: #115e59;
+  text-decoration: underline;
+}
+
 @media (max-width: 640px) {
   .container {
     margin: 20px;
     padding: 20px;
+  }
+
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .task-form {

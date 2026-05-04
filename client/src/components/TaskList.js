@@ -44,11 +44,6 @@ function TaskList({ tasks, fetchTasks, setError }) {
   const saveEdit = async (task) => {
     setError("");
 
-    const payload = {
-      title: editTitle.trim(),
-      completed: Boolean(task.completed),
-    };
-
     try {
       await API.put(`/tasks/${task.id}`, {
         title: editTitle.trim(),

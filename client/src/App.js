@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import API from "./services/api";
+import AuthPage from "./components/AuthPage";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 import "./App.css";
 
 function App() {
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("task_manager_user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -24,12 +29,34 @@ function App() {
   };
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    if (user) {
+      fetchTasks();
+    }
+  }, [user]);
+
+  const handleSignOut = () => {
+    localStorage.removeItem("task_manager_token");
+    localStorage.removeItem("task_manager_user");
+    setUser(null);
+    setTasks([]);
+    setError("");
+  };
+
+  if (!user) {
+    return <AuthPage onAuth={setUser} />;
+  }
 
   return (
     <div className="container">
-      <h1>Task Manager</h1>
+      <header className="app-header">
+        <div>
+          <h1>Task Manager</h1>
+          <p>{user.name}</p>
+        </div>
+        <button type="button" className="ghost-btn" onClick={handleSignOut}>
+          Sign Out
+        </button>
+      </header>
       <TaskForm fetchTasks={fetchTasks} setError={setError} />
       {error && <div className="error">{error}</div>}
       {loading ? (
