@@ -6,8 +6,12 @@ const taskRoutes = require("./routes/taskRoutes");
 const authRoutes = require("./routes/authRoutes");
 
 const app = express();
+let prod = "*"
+if (process.env.NODE_ENV === "production"){
+  prod = "https://my-client.onrender.com"
+}
 
-app.use(cors());
+app.use(cors({origin: prod}));
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);

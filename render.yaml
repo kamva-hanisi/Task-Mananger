@@ -1,0 +1,35 @@
+services:
+  # =========================
+  # Backend (Node + Express)
+  # =========================
+  - type: web
+    name: api-server
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node backend.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      # Example secrets (set real values in Render dashboard if sensitive)
+      - key: AUTH_SECRET
+        sync: false
+      - key: DB_FILE
+        value: data/db.json
+
+  # =========================
+  # Frontend (React)
+  # =========================
+  - type: web
+    name: my-client
+    runtime: static
+    plan: free
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://my-api.onrender.com
