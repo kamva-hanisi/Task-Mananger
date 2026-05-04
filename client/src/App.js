@@ -3,7 +3,7 @@ import API from "./services/api";
 import AuthPage from "./components/AuthPage";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
-import "./App.css";
+import "./App.scss";
 
 function App() {
   const [user, setUser] = useState(() => {
