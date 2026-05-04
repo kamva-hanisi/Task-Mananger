@@ -14,6 +14,11 @@ if (process.env.NODE_ENV === "production"){
 app.use(cors({origin: prod}));
 app.use(express.json());
 
+app.use("/", (req,res) =>{
+  res.json({
+    status: "healthy"
+  });
+})
 app.use("/api/auth", authRoutes);
 app.use("/api", taskRoutes);
 
