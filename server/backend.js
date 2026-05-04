@@ -8,7 +8,7 @@ const authRoutes = require("./routes/authRoutes");
 const app = express();
 let prod = "*"
 if (process.env.NODE_ENV === "production"){
-  prod = "https://my-client.onrender.com"
+  prod = "https://task-mananger-client.onrender.com"
 }
 
 app.use(cors({origin: prod}));
