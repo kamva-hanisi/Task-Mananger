@@ -5,7 +5,6 @@ services:
   - type: web
     name: api-server
     runtime: node
-    plan: free
     rootDir: server
     buildCommand: npm install
     startCommand: node backend.js
@@ -26,7 +25,6 @@ services:
   - type: web
     name: my-client
     runtime: static
-    plan: free
     rootDir: client
     buildCommand: npm install && npm run build
     staticPublishPath: build
