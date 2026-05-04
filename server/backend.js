@@ -14,13 +14,13 @@ if (process.env.NODE_ENV === "production"){
 app.use(cors({origin: prod}));
 app.use(express.json());
 
+app.use("/api/auth", authRoutes);
+app.use("/api", taskRoutes);
 app.use("/", (req,res) =>{
   res.json({
     status: "healthy"
   });
 })
-app.use("/api/auth", authRoutes);
-app.use("/api", taskRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
