@@ -57,9 +57,16 @@ function AuthPage({ onAuth }) {
       const endpoint = isSignUp ? "/auth/signup" : "/auth/signin";
       const res = await API.post(endpoint, payload);
 
-      localStorage.setItem("task_manager_token", res.data.token);
-      localStorage.setItem("task_manager_user", JSON.stringify(res.data.user));
-      onAuth(res.data.user);
+      if (res.data.token !== undefined) {
+        localStorage.setItem("task_manager_token", res.data.token);
+      }
+      if (res.data.user !== undefined) {
+        localStorage.setItem(
+          "task_manager_user",
+          JSON.stringify(res.data.user),
+        );
+        onAuth(res.data.user);
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Authentication failed.");
     } finally {
