@@ -11,10 +11,10 @@ A full-stack task management application built to help users create, organize, u
 
 1. Open a terminal in `server/`
 2. Install dependencies: `npm install`
-3. Copy `.env.example` to `.env` and update your MySQL credentials
+3. Copy `.env.example` to `.env` and update your PostgreSQL credentials
 4. Initialize the database:
    - Run the SQL in `server/db-init.sql`
-   - Or use your MySQL client to create the `tasks` database and `tasks` table
+   - Or use your PostgreSQL client to create the `tasks` database and `tasks` table
 5. Start the server:
    - `npm run dev` (development)
    - `npm start` (production)
