@@ -32,9 +32,8 @@ The backend listens on `PORT` from `.env`, or `5000` by default.
 
 To deploy the frontend to GitHub Pages:
 
-1. In `client/`, install `gh-pages`: `npm install --save-dev gh-pages`
-2. Run `npm run deploy`
-3. The app will be published at `https://task-mananger-client.onrender.com`
+1. To deploy the project, use **Render**
+2. The app will be published at `https://task-mananger-client.onrender.com`
 
 > Note: GitHub Pages only serves the React frontend. The backend must be hosted separately on a Node-compatible service.
 
