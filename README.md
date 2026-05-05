@@ -1,6 +1,6 @@
 # Task Manager
 
-A task management app with a mid-level React frontend and a junior-level Express/MySQL backend.
+A full-stack task management application built to help users create, organize, update, and track tasks through a clean React interface and a Node.js/Express backend. The project demonstrates CRUD operations, REST API design, frontend state management, backend routing, environment-based configuration, and database integration.
 
 ## Folder structure
 
@@ -34,7 +34,7 @@ To deploy the frontend to GitHub Pages:
 
 1. In `client/`, install `gh-pages`: `npm install --save-dev gh-pages`
 2. Run `npm run deploy`
-3. The app will be published at `https://kamva-hanisi.github.io/Task-Mananger`
+3. The app will be published at `https://task-mananger-client.onrender.com`
 
 > Note: GitHub Pages only serves the React frontend. The backend must be hosted separately on a Node-compatible service.
 
