@@ -8,7 +8,13 @@ import "./App.scss";
 function App() {
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("task_manager_user");
-    return storedUser ? JSON.parse(storedUser) : null;
+    try {
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch (err) {
+      localStorage.removeItem("task_manager_user");
+      localStorage.removeItem("task_manager_token");
+      return null;
+    }
   });
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -22,7 +28,19 @@ function App() {
       const res = await API.get("/tasks");
       setTasks(res.data);
     } catch (err) {
-      setError("Unable to load tasks. Make sure the backend is running.");
+      if (err.response?.status === 401) {
+        localStorage.removeItem("task_manager_token");
+        localStorage.removeItem("task_manager_user");
+        setUser(null);
+        setTasks([]);
+        setError("");
+        return;
+      }
+
+      setError(
+        err.response?.data?.message ||
+          "Unable to load tasks. Make sure the backend is running.",
+      );
     } finally {
       setLoading(false);
     }
@@ -52,6 +70,9 @@ function App() {
         <div>
           <h1>Task Manager</h1>
           <p>{user.name}</p>
+          <span className="app-description">
+            Add tasks, mark them complete, and keep your day organized.
+          </span>
         </div>
         <button type="button" className="ghost-btn" onClick={handleSignOut}>
           Sign Out
