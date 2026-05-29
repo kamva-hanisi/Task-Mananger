@@ -11,10 +11,10 @@ A full-stack task management application built to help users create, organize, u
 
 1. Open a terminal in `server/`
 2. Install dependencies: `npm install`
-3. Copy `.env.example` to `.env` and update your MySQL credentials
+3. Copy `.env.example` to `.env` and update your PostgreSQL credentials
 4. Initialize the database:
    - Run the SQL in `server/db-init.sql`
-   - Or use your MySQL client to create the `tasks` database and `tasks` table
+   - Or use your PostgreSQL client to create the `tasks` database and `tasks` table
 5. Start the server:
    - `npm run dev` (development)
    - `npm start` (production)
@@ -32,9 +32,8 @@ The backend listens on `PORT` from `.env`, or `5000` by default.
 
 To deploy the frontend to GitHub Pages:
 
-1. In `client/`, install `gh-pages`: `npm install --save-dev gh-pages`
-2. Run `npm run deploy`
-3. The app will be published at `https://task-mananger-client.onrender.com`
+1. To deploy the project, use **Render**
+2. The app will be published at `https://task-mananger-client.onrender.com`
 
 > Note: GitHub Pages only serves the React frontend. The backend must be hosted separately on a Node-compatible service.
 
