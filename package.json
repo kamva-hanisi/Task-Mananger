@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "npm install --prefix client && npm run build --prefix client",
-    "start": "npm start --prefix server"
+    "dev": "vercel dev"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
