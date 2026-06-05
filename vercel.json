@@ -1,0 +1,38 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "client/build",
+  "rewrites": [
+    {
+      "source": "/api/auth/signup",
+      "destination": "/api/auth/signup"
+    },
+    {
+      "source": "/api/auth/signin",
+      "destination": "/api/auth/signin"
+    },
+    {
+      "source": "/api/auth/forgot-password",
+      "destination": "/api/auth/forgot-password"
+    },
+    {
+      "source": "/api/auth/reset-password",
+      "destination": "/api/auth/reset-password"
+    },
+    {
+      "source": "/api/tasks/:id",
+      "destination": "/api/tasks/[id]"
+    },
+    {
+      "source": "/api/tasks",
+      "destination": "/api/tasks"
+    },
+    {
+      "source": "/api/health",
+      "destination": "/api/health"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

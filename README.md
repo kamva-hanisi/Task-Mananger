@@ -1,48 +1,87 @@
 # Task Manager
 
-A full-stack task management application built to help users create, organize, update, and track tasks through a clean React interface and a Node.js/Express backend. The project demonstrates CRUD operations, REST API design, frontend state management, backend routing, environment-based configuration, and database integration.
+A full-stack task management app with a React client, an Express API, and a PostgreSQL database. Users can sign up, sign in, reset their password, and manage their own tasks.
 
-## Folder structure
+## Project Structure
 
 - `client/`: React frontend
 - `server/`: Express backend
 
-## Backend setup
+## Database
 
-1. Open a terminal in `server/`
-2. Install dependencies: `npm install`
-3. Copy `.env.example` to `.env` and update your PostgreSQL credentials
-4. Initialize the database:
-   - Run the SQL in `server/db-init.sql`
-   - Or use your PostgreSQL client to create the `tasks` database and `tasks` table
-5. Start the server:
-   - `npm run dev` (development)
-   - `npm start` (production)
+The app uses PostgreSQL through the `pg` package. It works with:
 
-The backend listens on `PORT` from `.env`, or `5000` by default.
+- Supabase hosted PostgreSQL
+- Local PostgreSQL connections through Beekeeper Studio
 
-## Frontend setup
+Do not commit real database URLs, passwords, or Supabase credentials. Keep them in `server/.env`.
 
-1. Open a terminal in `client/`
-2. Install dependencies: `npm install`
-3. Copy `client/.env.example` to `client/.env` if you need a custom API URL
-4. Start the app: `npm start`
+## Server Environment
 
-## GitHub Pages deployment
+Create `server/.env` from `server/.env.example`.
 
-To deploy the frontend to GitHub Pages:
+For local PostgreSQL:
 
-1. To deploy the project, use **Render**
-2. The app will be published at `https://task-mananger-client.onrender.com`
+```env
+PORT=5000
+AUTH_SECRET=replace_this_with_a_long_random_secret
+CLIENT_URL=http://localhost:3000
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=your_local_postgres_password
+DB_NAME=task_manager
+DB_SSL=false
+DB_SSL_REJECT_UNAUTHORIZED=false
+```
 
-> Note: GitHub Pages only serves the React frontend. The backend must be hosted separately on a Node-compatible service.
+For Supabase:
 
-## Deployment notes
+```env
+PORT=5000
+AUTH_SECRET=replace_this_with_a_long_random_secret
+CLIENT_URL=http://localhost:3000
+DATABASE_URL=postgresql://postgres.your_project_ref:your_password@aws-0-region.pooler.supabase.com:6543/postgres
+DB_SSL=true
+DB_SSL_REJECT_UNAUTHORIZED=false
+```
 
-- The frontend reads `REACT_APP_API_URL` if set; otherwise it uses `http://localhost:5000/api`
-- Use `npm run build` in `client/` to create a production bundle
-- The backend now has a `start` script and uses `PORT || 5000`
+## Client Environment
 
-## Database initialization
+Create `client/.env` from `client/.env.example` if you need a custom API URL.
 
-The SQL file `server/db-init.sql` creates the `tasks` database and the required `tasks` table.
+```env
+REACT_APP_API_URL=http://localhost:5000/api
+```
+
+## Run Locally
+
+Install and start the server:
+
+```bash
+cd server
+npm install
+npm run dev
+```
+
+Install and start the client:
+
+```bash
+cd client
+npm install
+npm start
+```
+
+The client runs at `http://localhost:3000` and the API runs at `http://localhost:5000/api`.
+
+## Supabase Setup
+
+1. Create a Supabase project.
+2. Open the Supabase SQL Editor.
+3. Run the database schema SQL.
+4. Copy the Supabase PostgreSQL connection string into `server/.env`.
+5. Keep `DB_SSL=true`.
+
+## Beekeeper Setup
+
+Use Beekeeper Studio to connect to either local PostgreSQL or your Supabase database. Run the same schema SQL there if you are setting up a local database.

@@ -1,8 +1,12 @@
 const { Pool } = require("pg");
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({
+  path: path.join(__dirname, "..", ".env"),
+});
 
+const isProduction = process.env.NODE_ENV === "production";
 const ssl =
-  process.env.DB_SSL === "true"
+  process.env.DB_SSL === "true" || (isProduction && process.env.DB_SSL !== "false")
     ? {
         rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED !== "false",
       }
@@ -19,7 +23,7 @@ const db = new Pool(
         port: Number(process.env.DB_PORT || 5432),
         user: process.env.DB_USER || "postgres",
         password: process.env.DB_PASSWORD || "",
-        database: process.env.DB_NAME || "postgres",
+        database: process.env.DB_NAME || "task_manager",
         ssl,
       },
 );
