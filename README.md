@@ -1,31 +1,33 @@
 # Task Manager
 
-A full-stack task management app with a React client, Vercel API functions, and a Supabase PostgreSQL database. Users can sign up, sign in, reset their password, and manage their own tasks.
+A full-stack task management app with a React client, Vercel API functions, and a Neon PostgreSQL database. Users can sign up, sign in, reset their password, and manage their own tasks.
 
 ## Project Structure
 
 - `client/`: React frontend
 - `api/`: Vercel API functions
 - `server/`: Shared backend database, controller, auth, and password utilities
+- `database/schema.sql`: PostgreSQL schema for Neon
 
 ## Database
 
 The app uses PostgreSQL through the `pg` package. It works with:
 
-- Supabase hosted PostgreSQL
+- Neon hosted PostgreSQL
 - Local PostgreSQL connections through Beekeeper Studio
 
-Do not commit real database URLs, passwords, or Supabase credentials. Keep them in local `.env` files or Vercel Environment Variables.
+Do not commit real database URLs, passwords, or Neon credentials. Keep them in local `.env` files or Vercel Environment Variables.
 
 ## Environment Variables
 
 For Vercel deployment, add these in the Vercel dashboard:
 
 ```env
-DATABASE_URL=postgresql://postgres.your_project_ref:your_password@aws-0-region.pooler.supabase.com:6543/postgres
+DATABASE_URL=postgresql://user:password@ep-example-pooler.region.aws.neon.tech/dbname?sslmode=require
 DB_SSL=true
-DB_SSL_REJECT_UNAUTHORIZED=false
+DB_SSL_REJECT_UNAUTHORIZED=true
 AUTH_SECRET=replace_this_with_a_long_random_secret
+CLIENT_URL=https://your-github-username.github.io
 NODE_ENV=production
 ```
 
@@ -45,18 +47,24 @@ DB_SSL=false
 DB_SSL_REJECT_UNAUTHORIZED=false
 ```
 
-For Supabase:
+For Neon:
 
 ```env
 AUTH_SECRET=replace_this_with_a_long_random_secret
-DATABASE_URL=postgresql://postgres.your_project_ref:your_password@aws-0-region.pooler.supabase.com:6543/postgres
+DATABASE_URL=postgresql://user:password@ep-example-pooler.region.aws.neon.tech/dbname?sslmode=require
 DB_SSL=true
-DB_SSL_REJECT_UNAUTHORIZED=false
+DB_SSL_REJECT_UNAUTHORIZED=true
 ```
 
 ## Client Environment
 
-For deployment, no client environment variable is needed. The client calls `/api` on the same Vercel website.
+For GitHub Pages deployment, add this repository secret in GitHub:
+
+```env
+REACT_APP_API_URL=https://your-task-manager-api.vercel.app/api
+```
+
+For local Vercel development, no client environment variable is needed. The client calls `/api` on the same Vercel website.
 
 For old-style separate local servers only, you can create `client/.env`:
 
@@ -82,23 +90,31 @@ npm run dev
 
 The app and API run together through Vercel locally.
 
-## Supabase Setup
+## Neon Setup
 
-1. Create a Supabase project.
-2. Open the Supabase SQL Editor.
-3. Run the database schema SQL.
-4. Copy the Supabase PostgreSQL connection string into Vercel Environment Variables.
+1. Create a Neon project.
+2. Open the Neon SQL Editor.
+3. Run `database/schema.sql`.
+4. Copy the Neon pooled PostgreSQL connection string into Vercel Environment Variables.
 5. Keep `DB_SSL=true`.
 
 ## Beekeeper Setup
 
 Use Beekeeper Studio only as a database viewer/editor. It does not host your app.
 
-To connect Beekeeper to Supabase, use the same Supabase Postgres connection details:
+To connect Beekeeper to Neon, use the same Neon Postgres connection details:
 
-- Host: the Supabase pooler host
-- Port: usually `6543`
-- User: usually `postgres.your_project_ref`
-- Password: your Supabase database password
-- Database: usually `postgres`
+- Host: the Neon pooler host
+- Port: usually `5432`
+- User: your Neon database user
+- Password: your Neon database password
+- Database: your Neon database name
 - SSL: enabled
+
+## GitHub Pages Setup
+
+1. Push the repository to GitHub.
+2. Go to Settings > Pages.
+3. Set Source to GitHub Actions.
+4. Add a repository secret named `REACT_APP_API_URL` with your Vercel API URL.
+5. Push to `main`; the workflow deploys `client/build`.
