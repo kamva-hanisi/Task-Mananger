@@ -1,7 +1,21 @@
 import axios from "axios";
 
+const normalizeApiUrl = (url) => {
+  if (!url) {
+    return "/api";
+  }
+
+  const trimmedUrl = url.trim().replace(/\/+$/, "");
+
+  if (trimmedUrl.startsWith("http://") || trimmedUrl.startsWith("https://")) {
+    return trimmedUrl;
+  }
+
+  return `https://${trimmedUrl}`;
+};
+
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "/api",
+  baseURL: normalizeApiUrl(process.env.REACT_APP_API_URL),
   headers: {
     "Content-Type": "application/json",
   },
